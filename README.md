@@ -118,7 +118,7 @@ Running the same query in a Sentinel Workbook to create the threat map:![35  Map
 Final threat map (limited at 1000 responses for the free version of the API): ![36  Final Map](https://github.com/user-attachments/assets/211fd480-2a57-4f76-b705-a4f6573edf39)
 
 ## Key Takeaways
-- **Real-world attacks**: This project was a great way for me to build my hands-on skills with SIEM tools, logging, and setting up a cloud infrastructure. It was also really interesting to see these real attacks and put a location to where their IP addresses.
+- **Real-world attacks**: This project was a great way for me to build my hands-on skills with SIEM tools, logging, and setting up a cloud infrastructure. It was also really interesting to see these real attacks and put a location to their IP addresses.
 - **Logging REQUIRES visibility**: Capturing logs by themselves is one thing, but connecting them to a SIEM like Microsoft Sentinel turns raw data into actionable insights
 - **Even low-profile endpoints get attacked fast**: Exposing a single VM to the public internet led to thousands of login attempts within hours. This made me realize just how active attackers are on the open web.
 - **Doing more where it matters**: Instead of stopping at what I thought was good enough, I went beyond to improve the threat map with more accurate geolocation data. As a result, I learned a lot more in the process.
