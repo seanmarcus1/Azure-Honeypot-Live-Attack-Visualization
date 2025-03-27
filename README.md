@@ -69,7 +69,7 @@ Adding Microsoft Sentinel with Windows Security Events to the Log Analytics Work
 Creating a Data Collection Rule for the Azure Monitoring Agent which is used by the VM to forward logs to the Log Analytics Workspace: ![14  DCR Creation](https://github.com/user-attachments/assets/d1a0edf9-8e07-48d4-98c5-974e9e242b6c)
 
 ## First Attacker Activities and KQL Queries
-After about an hour after configuring our Log Analytics Workspace, the first failed login attempt that was not done myself was detected. The attacker attempted to login as "\guest" and came from an IP address bsaed in Switzerland.
+After about an hour after configuring our Log Analytics Workspace, the first failed login attempt that was not done myself was detected. The attacker attempted to login as "\guest" and came from an IP address based in Switzerland.
 
 Details of the first failed login: ![16  First External Detection](https://github.com/user-attachments/assets/1e3216fc-b67c-49ba-b2b6-2891eda72efb)
 
