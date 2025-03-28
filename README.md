@@ -8,11 +8,15 @@ The lab consists of:
 - **Microsoft Sentinel** as our Security Information and Event Management system (SIEM)
 - A **custom threat map** displaying global attacker locations based on failed login attempts
 
+---
+
 ## Objectives
 - Deploy a honeypot in Microsoft Azure that is fully exposed to the public internet
 - Capture and analyze failed login attempts using Microsoft Sentinel
 - Query logs using Kusto Query Language (KQL)
 - Map global attack origins using geolocation data
+
+---
 
 ## Lab Setup
 To set the lab up, we need to configure the Microsoft Azure environment. This consists of establishing a **Resource Group**, **Virtual Network**, and finally a **Windows 10 VM**.
@@ -43,6 +47,8 @@ Disabling Windows Firewall Inside VM: ![5  VM Firewall Settings](https://github.
 
 Ping Test Confirming VM is Reachable Over Public Internet: ![6  VM Ping Test](https://github.com/user-attachments/assets/0dfe18cd-2952-4175-ae9f-debc1a4e09c5)
 
+---
+
 ## Simulating Attacker Activity
 To generate logs, we intentionally fail login attempts to the VM via Remote Desktop. These login failures are observed in **Windows Event Viewer** under 'Event ID 4625'.
 
@@ -53,6 +59,8 @@ Intentionally Failing Login Attempts:
 Observing a Failed Login Attempt in Windows Event Viewer: ![8  Event Viewer Search](https://github.com/user-attachments/assets/d0d71ee2-3555-48c6-ae5e-67ca97cd34e5)
 
 Logs Generated for 'Event ID 4625' (Logon Failure): ![9  Self Gen Login Fail Logs List](https://github.com/user-attachments/assets/04e03825-768a-4e68-b32d-20c11a19d814)
+
+---
 
 ## Log Analytics and Microsoft Sentinel Integration
 After making sure that logs are being generated on the VM, we need a way to forward those logs into Azure and Microsoft Sentinel.
@@ -67,6 +75,8 @@ Log Analytics Workspace created: ![10  LAW Creation](https://github.com/user-att
 Adding Microsoft Sentinel with Windows Security Events to the Log Analytics Workspace: ![12  Windows Security Events Installation](https://github.com/user-attachments/assets/ef22bbde-e82e-4e52-99e5-968af362449b)
 
 Creating a Data Collection Rule for the Azure Monitoring Agent which is used by the VM to forward logs to the Log Analytics Workspace: ![14  DCR Creation](https://github.com/user-attachments/assets/d1a0edf9-8e07-48d4-98c5-974e9e242b6c)
+
+---
 
 ## First Attacker Activities and KQL Queries
 After about an hour after configuring our Log Analytics Workspace, the first failed login attempt that was not done myself was detected. The attacker attempted to login as "\guest" and came from an IP address based in Switzerland.
@@ -87,9 +97,11 @@ Geolocation data of this particular attempt: ![20  Query Geolocation](https://gi
 
 Instead of a certain account, we can also search by EventID: ![21  Query By Security EventID](https://github.com/user-attachments/assets/0630b435-59b1-4bac-87c1-9ce8d45f914b)
 
+---
+
 ## Geolocation and Threat Map Detection
 
-## Method 1 - Initial Threat Map
+### Method 1 - Initial Threat Map
 At first, I manually uploaded a large IP-to-Geo CSV watchlist to Microsoft Sentinel. This method worked, but the data in the CSV file was outdated. As a result, the IP addresses didn't match up to where they were actually coming from. For example, IPs from Russia showed up as coming from England and Poland or IPs from Thailand showed as China.
 
 CSV Uploaded: ![22  Inaccurate Map 1](https://github.com/user-attachments/assets/487dbc7a-9f0e-4055-b879-ed7c966cfc76)
@@ -98,7 +110,7 @@ KQL Query organizing data: ![25  Inaccurate Map 4](https://github.com/user-attac
 
 Map query and resulting threat map: ![27  Inaccurate Map 6](https://github.com/user-attachments/assets/af337abc-0664-4e38-ab89-eb5811c16b13)
 
-## Method 2 - Updated and Final Threat Map
+### Method 2 - Updated and Final Threat Map
 I could have completed the lab with the outdated map, but for educational purposes, I decided to dig deeper and figure out how to build a more accurate one. Using this guide: ["Azure Sentinel SIEM Lab to Map Live Cyber Attacks"](https://medium.com/@mxyiwa/azure-sentinel-siem-lab-to-map-live-cyber-attacks-d74c2426d59b), I implemented the threat map creation section into this lab.
 - Enriched IP address data using a current geolocation database
 - Implementing the database API directly in the VM using a custom PowerShell script
@@ -116,6 +128,8 @@ Data displayed using the custom log: ![34  Cleaning Up The Data](https://github.
 Running the same query in a Sentinel Workbook to create the threat map:![35  Map Workbook Creation](https://github.com/user-attachments/assets/632cd94a-54c0-40bf-a376-56e8e0fee4fe)
 
 Final threat map (limited at 1000 responses for the free version of the API): ![36  Final Map](https://github.com/user-attachments/assets/211fd480-2a57-4f76-b705-a4f6573edf39)
+
+---
 
 ## Key Takeaways
 - **Real-world attacks**: This project was a great way for me to build my hands-on skills with SIEM tools, logging, and setting up a cloud infrastructure. It was also really interesting to see these real attacks and put a location to their IP addresses.
